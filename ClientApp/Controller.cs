@@ -127,12 +127,7 @@ namespace ClientApp
                 if (Context.lastChatIndex != 0)
                 {
                     for (int i = Context.lastChatIndex - 1; i >= 0; i--)
-                    {
-                        MainForm.Invoke((MethodInvoker)(() =>
-                        {
                             MainForm.ShowChatObject(Context.chatObjects.Values[i], true);
-                        }));
-                    }
 
                     Context.lastChatIndex = 0;
                     Context.lastChatLoad = Context.chatObjects.Values[0].CreateAt;

@@ -1,5 +1,6 @@
 ﻿using ClientApp.common.Class;
 using FontAwesome.Sharp;
+using Guna.UI2.WinForms;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -126,6 +127,7 @@ namespace ClientApp
                 MinimumSize = new Size(flow_chat.Width - 40, 0),
                 Padding = new Padding(10, 0, 0, 0)
             };
+
             IconPictureBox icon = new IconPictureBox
             {
                 IconChar = IconChar.UserCircle,
@@ -134,6 +136,7 @@ namespace ClientApp
                 Size = new Size(60, 60),
                 Padding = new Padding(5)
             };
+
             if (chatObject.Source == Context.MyId)
             {
                 flp.FlowDirection = FlowDirection.RightToLeft;
@@ -143,12 +146,14 @@ namespace ClientApp
                 flp.Controls.Add(icon);
                 flp.FlowDirection = FlowDirection.LeftToRight;
             }
+
             ToolTip tooltip = new ToolTip
             {
                 BackColor = Color.Aqua
             };
 
             int height = 0;
+
             if (chatObject is HistoryMessage)
             {
                 ((MsControl)chatObject.Control).MaximumSize = new Size(flow_chat.Width / 2 + 50, 0);
@@ -181,6 +186,22 @@ namespace ClientApp
 
             AddControlToPanel(flow_chat, flp, IsPastObject);
             flow_chat.ScrollControlIntoView(flp);
+        }
+
+        private void AddControlToPanel(Guna2GradientPanel panel, FlowLayoutPanel control, bool IsPastObject)
+        {
+            if (panel.InvokeRequired)
+            {
+                panel.Invoke(new MethodInvoker(() => panel.Controls.Add(control)));
+            }
+            else
+            {
+                panel.Controls.Add(control);
+            }
+            if (IsPastObject)
+            {
+                panel.Controls.SetChildIndex(control, 0);
+            }
         }
 
         private void bt_Send_Click(object sender, EventArgs e)
